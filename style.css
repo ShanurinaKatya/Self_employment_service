@@ -1,0 +1,191 @@
+body {
+  display: flex;
+  height: max-content;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-image: url("https://pro.selfwork.ru/preview-url-small.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+body.dark-theme {
+    background: linear-gradient(#1f50e8, #4e74ec) no-repeat;
+    min-height: 100vh;
+}
+
+.service-background {
+  margin: auto;
+  justify-content: center;
+  background: rgba(153, 153, 153, 0.5);
+  border-radius: 10px;
+  width: 320px;
+}
+
+.service-calculator {
+  margin-left: 15%;
+  margin-top: 10%;
+}
+
+.service-btn {
+  margin-right: 5px;
+  margin-top: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+  border: none;
+  background: #ffffff;
+  color: black;
+  font-size: 1.5rem;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+
+
+.service-btn:active {
+  filter: brightness(130%);
+}
+.service-btn:hover {
+  background: darkgray;
+}
+
+.service-btn.primary-action {
+  background: linear-gradient(70deg, #0235cf, #92aaf1);
+}
+.service-btn.primary-action:hover {
+  background: #1752d4;
+}
+
+
+.service-btn.secondary-action {
+  background: #86909c;
+}
+.service-btn.secondary-action:hover {
+  background: #0B1F33;
+}
+
+.service-btn.execute-action {
+  width: 110px;
+  border-radius: 10px;
+  background: red;
+}
+
+.service-btn.execute-action:hover {
+  background: #c20000;
+}
+
+.total-amount {
+  width: 220px;
+  height: 70px;
+  margin-bottom: 15px;
+  padding-right: 10px;
+  background: #ffffff;
+  border-radius: 10px;
+  text-align: right;
+  color: #555555;
+  font-size: 3rem;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.service-signature {
+  margin: auto;
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.3);
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.details {
+  position: fixed;
+  bottom: 20px;
+}
+
+.details.theme-btn {
+  right: 20px;
+  padding: 12px 20px;
+  background: #ffffff;
+  border: none;
+  border-radius: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.details.git-service {
+  left: 20px;
+  padding: 12px 20px;
+  background: #ffffff;
+  text-decoration: none;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.details.fio {
+  left: 45%;
+  bottom: 70px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  visibility: hidden;
+  user-select: none;
+}
+
+.details.author {
+  left: 47%;
+  z-index: 100;
+  padding: 12px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  border-radius: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  user-select: none;
+}
+
+.author:hover ~ .fio {
+  bottom: 70px;
+  visibility: visible;
+}
+
+.details.order-button {
+  padding: 12px 20px;
+  left: 20px;
+  bottom: 100px;
+  background: #ffffff;
+  border: none;
+  border-radius: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: inline-block;
+}
+
+.details.order-message {
+  left: 20px;
+  bottom: 100px;
+  background: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  white-space: nowrap;
+}
+
+.details.order-message.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.details:hover {
+  background-color: darkgrey;
+}

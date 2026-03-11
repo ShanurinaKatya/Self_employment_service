@@ -4,14 +4,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-image: url("https://pro.selfwork.ru/preview-url-small.jpg");
+  background: linear-gradient(#1f50e8, #4e74ec) no-repeat;
   background-size: 100%;
   background-repeat: no-repeat;
-}
-
-body.dark-theme {
-    background: linear-gradient(#1f50e8, #4e74ec) no-repeat;
-    min-height: 100vh;
 }
 
 .service-background {

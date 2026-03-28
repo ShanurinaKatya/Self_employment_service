@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background: linear-gradient(#1f50e8, #4e74ec) no-repeat;
+  background: #EFF5F9;
   background-size: 100%;
   background-repeat: no-repeat;
 }
@@ -37,7 +37,6 @@ body {
   user-select: none;
 }
 
-
 .service-btn:active {
   filter: brightness(130%);
 }
@@ -46,12 +45,12 @@ body {
 }
 
 .service-btn.primary-action {
-  background: linear-gradient(70deg, #0235cf, #92aaf1);
+  background: #3F68EA;
+  color: #ffffff;
 }
 .service-btn.primary-action:hover {
   background: #1752d4;
 }
-
 
 .service-btn.secondary-action {
   background: #86909c;
@@ -63,11 +62,12 @@ body {
 .service-btn.execute-action {
   width: 110px;
   border-radius: 10px;
-  background: red;
+  background: #3F68EA;
+  color: #ffffff;
 }
 
 .service-btn.execute-action:hover {
-  background: #c20000;
+  background: #1752d4;
 }
 
 .total-amount {
@@ -101,7 +101,6 @@ body {
 
 .details.theme-btn {
   right: 20px;
-  z-index: 1000;
   padding: 12px 20px;
   background: #ffffff;
   border: none;

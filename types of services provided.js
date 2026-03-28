@@ -5,8 +5,6 @@ window.onload = function() {
     let selectedOperation = null // выбранная операция
 
     const outputElement = document.getElementById("total-result")
-    const orderButton = document.getElementById("order-button")
-    const orderMessage = document.querySelector(".order-message")
 
     // Выбираем все кнопки с цифрами
     const digitButtons = document.querySelectorAll('[id ^= "service_"]');
@@ -123,26 +121,35 @@ window.onload = function() {
                 return;
         }
 
-        a = expressionResult.toString()
-        b = ''
-        selectedOperation = null
+        a = expressionResult.toString();
+        b = '';
+        selectedOperation = null;
 
-        outputElement.innerHTML = a
+        outputElement.innerHTML = a;
     }
 
     document.getElementById("theme-toggle").onclick = function() {
         document.body.classList.toggle('dark-theme');
     };
 
-    orderButton.onclick = function() {
-        orderMessage.classList.add('show');
+    // Кнопка для расчета налога 6%
+    const taxButton = document.getElementById("tax-button");
+    if (taxButton) {
+        taxButton.onclick = function() {
+            // Получаем текущее значение из поля total-result
+            let currentValue = outputElement.innerHTML;
 
-        setTimeout(function() {
-            orderMessage.classList.remove('show');
-        }, 3000);
-    };
+            // Преобразуем в число, убираем все лишнее
+            let amount = parseFloat(currentValue);
 
-    // Скрываем сообщение при загрузке страницы
-    orderMessage.classList.remove('show');
+            // Вычисляем 6% от суммы
+            let tax = amount * 0.06;
 
+            // Округляем до 2 знаков после запятой
+            tax = Math.round(tax * 100) / 100;
+
+            // Показываем результат в том же поле
+            outputElement.innerHTML = tax.toString();
+        };
+    }
 };

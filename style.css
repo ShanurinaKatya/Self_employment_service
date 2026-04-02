@@ -178,3 +178,24 @@ body.dark-theme {
 .tax-btn:hover {
   background: #1752d4; /* Инвертируем градиент при наведении */
 }
+
+.white-header {
+  position: fixed;       /* Фиксируем наверху, чтобы не уходил при прокрутке */
+  top: 0;                /* Прижимаем к верхнему краю */
+  left: 0;               /* Прижимаем к левому краю */
+  width: 100%;           /* Растягиваем на всю ширину */
+  height: 50px;          /* Высота хедера */
+  background: white;     /* Белый фон */
+  display: flex;        /* Используем flexbox для выравнивания содержимого */
+  align-items: center;   /* Выравниваем содержимое по вертикали по центру */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Выравниваем содержимое по горизонтали по центру */
+}
+
+/* Стили для надписи "Калькулятор" */
+.header-title {
+  font-family: "Comic Sans MS", cursive, sans-serif; /* Тот же шрифт, что и в калькуляторе */
+  font-size: 24px;
+  font-weight: bold;      /* Размер шрифта */
+  color: #3F68EA;        /* Синий цвет, как у кнопок primary-action */
+  margin-left: 20px;
+}

@@ -5,8 +5,6 @@ window.onload = function() {
     let selectedOperation = null // выбранная операция
 
     const outputElement = document.getElementById("total-result")
-
-    // Выбираем все кнопки с цифрами
     const digitButtons = document.querySelectorAll('[id ^= "service_"]');
 
     // Функция обработки нажатия на цифровые кнопки
@@ -132,7 +130,7 @@ window.onload = function() {
         document.body.classList.toggle('dark-theme');
     };
 
-    // Кнопка для расчета налога 6%
+    // Кнопка для расчета налога 4%
     const taxButton = document.getElementById("tax-button");
     if (taxButton) {
         taxButton.onclick = function() {
@@ -142,8 +140,8 @@ window.onload = function() {
             // Преобразуем в число, убираем все лишнее
             let amount = parseFloat(currentValue);
 
-            // Вычисляем 6% от суммы
-            let tax = amount * 0.06;
+            // Вычисляем 4% от суммы
+            let tax = amount * 0.04;
 
             // Округляем до 2 знаков после запятой
             tax = Math.round(tax * 100) / 100;

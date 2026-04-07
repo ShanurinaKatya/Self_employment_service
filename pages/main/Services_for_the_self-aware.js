@@ -14,11 +14,11 @@ export class MainPage {
 
     getInitialServices() {
         return [
-            { id: 1, src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg", title: "Регистрация в качестве самозанятого", text: "Подача заявки в ФНС, присвоение статуса «плательщик НПД»" },
-            { id: 2, src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg", title: "Изменение вида деятельности", text: "Добавление, удаление или замена кодов ОКВЭД/ОКПДТ" },
-            { id: 3, src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg", title: "Снятие с учёта самозанятого", text: "Прекращение деятельности в режиме НПД" },
-            { id: 4, src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg", title: "Выдача справки о постановке на учёт", text: "Официальный документ из ФНС для банков и заказчиков" },
-            { id: 5, src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg", title: "Помощь в уплате налога", text: "Проверка начислений, формирование квитанции, контроль оплаты" }
+            { id: 1, src: "https://cdn.gpb.ru/upload/files/iblock/f1c/h5pi4duvqhflhahp95loe4vrdshkptu7/x1_titul_2432x800.jpg", title: "Регистрация в качестве самозанятого", text: "Подача заявки в ФНС, присвоение статуса «плательщик НПД»" },
+            { id: 2, src: "https://cdn.gpb.ru/upload/files/iblock/18e/674mzgnqv20xyt6ryxad0t2trazpd3wz/x1_inside_2432x800.jpg", title: "Изменение вида деятельности", text: "Добавление, удаление или замена кодов ОКВЭД/ОКПДТ" },
+            { id: 3, src: "https://cdn.gpb.ru/upload/files/iblock/bf2/x53am725mw4hcw3fbvjeqw1h3ypzmmnw/titul_1200x630-_-2024_12_02T124856.085.png", title: "Снятие с учёта самозанятого", text: "Прекращение деятельности в режиме НПД" },
+            { id: 4, src: "https://cdn.gpb.ru/upload/files/iblock/b78/9fdyo75ph27322mcx3kla766p54vsgj2/x1_IP.png", title: "Выдача справки о постановке на учёт", text: "Официальный документ из ФНС для банков и заказчиков" },
+            { id: 5, src: "https://cdn.gpb.ru/upload/files/iblock/107/skbum8ndum12z2s9s6c9qsyngd6jc5do/x1_titul_2432x800.jpg", title: "Помощь в уплате налога", text: "Проверка начислений, формирование квитанции, контроль оплаты" }
         ];
     }
 

@@ -3,6 +3,7 @@ import { ProductPage } from "../product/Services_for_the_self-aware.js";
 import { AddButtonComponent } from "../../components/add-button/Services_for_the_self-aware.js";
 import { SearchButtonComponent } from "../../components/search-button/Services_for_the_self-aware.js";
 import { ResetButtonComponent } from "../../components/reset-button/Services_for_the_self-aware.js";
+import { removeValues } from "../../utils/Services_for_the_self-aware.js";
 
 export class MainPage {
     constructor(parent) {
@@ -10,6 +11,7 @@ export class MainPage {
         this.services = this.getInitialServices();
         this.filterText = "";
         this.nextId = 6;
+
     }
 
     getInitialServices() {
@@ -32,13 +34,24 @@ export class MainPage {
         if (this.services.length === 0) return;
         const first = this.services[0];
         const newId = this.nextId++;
-        const copy = { ...first, id: newId };
+
+        // Простое и надёжное копирование (без merge, чтобы не сломать)
+        const copy = {
+            ...first,          // копируем все поля (src, title, text и др.)
+            id: newId          // обновляем id
+        };
+
         this.services.push(copy);
         this.render();
     }
 
     deleteService(id) {
-        this.services = this.services.filter(s => s.id !== id);
+        // Получаем массив id всех услуг
+        const allIds = this.services.map(s => s.id);
+        // Удаляем нужный id с помощью removeValues
+        const remainingIds = removeValues(allIds, id);
+        // Оставляем только те услуги, id которых остались
+        this.services = this.services.filter(s => remainingIds.includes(s.id));
         this.render();
     }
 

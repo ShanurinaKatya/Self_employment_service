@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple App</title>
-    <!-- Bootstrap CSS (библиотека, её можно оставить) -->
+    <title>Сервис для самозанятых</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Import map для Three.js (используем CDN, чтобы не зависеть от node_modules) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
 </head>
 <body>
-    <!-- Корневой контейнер, сюда будет рендериться приложение -->
     <div id="root"></div>
-
-    <!-- Подключаем Bootstrap JS -->
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Наш главный скрипт (модуль) -->
     <script src="main.js" type="module"></script>
 </body>
 </html>

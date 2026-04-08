@@ -3,7 +3,7 @@ import { ProductPage } from "../product/Services_for_the_self-aware.js";
 import { AddButtonComponent } from "../../components/add-button/Services_for_the_self-aware.js";
 import { SearchButtonComponent } from "../../components/search-button/Services_for_the_self-aware.js";
 import { ResetButtonComponent } from "../../components/reset-button/Services_for_the_self-aware.js";
-import { removeValues } from "../../utils/Services_for_the_self-aware.js";
+import { removeValues, merge } from "../../utils/Services_for_the_self-aware.js";
 
 export class MainPage {
     constructor(parent) {
@@ -34,13 +34,8 @@ export class MainPage {
         if (this.services.length === 0) return;
         const first = this.services[0];
         const newId = this.nextId++;
-
-        // Простое и надёжное копирование (без merge, чтобы не сломать)
-        const copy = {
-            ...first,          // копируем все поля (src, title, text и др.)
-            id: newId          // обновляем id
-        };
-
+        // Объединяем сначала объект с новым id, потом first – при конфликте id берётся из первого объекта (нового)
+        const copy = merge({ id: newId }, first);
         this.services.push(copy);
         this.render();
     }

@@ -114,10 +114,10 @@ export class ThreeViewerComponent {
     setView(view) {
         if (!this.camera) return;
         switch(view) {
-            case 'front': this.camera.position.set(0, 1, 3); break;
-            case 'back':  this.camera.position.set(0, 1, -3); break;
-            case 'left':  this.camera.position.set(-3, 1, 0); break;
-            case 'right': this.camera.position.set(3, 1, 0); break;
+            case 'front': this.camera.position.set(0, 1, 5); break;
+            case 'back':  this.camera.position.set(0, 1, -5); break;
+            case 'left':  this.camera.position.set(-5, 1, 0); break;
+            case 'right': this.camera.position.set(5, 1, 0); break;
         }
         this.camera.lookAt(0, 1, 0);
         if (this.controls) this.controls.target.set(0, 1, 0);

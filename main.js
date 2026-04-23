@@ -84,6 +84,20 @@ function injectGlobalStyles() {
             color: black;
         }
 
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #3F68EA;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
         /* Синие кнопки (в стиле калькулятора) */
         .btn-primary {
             background-color: #3F68EA;

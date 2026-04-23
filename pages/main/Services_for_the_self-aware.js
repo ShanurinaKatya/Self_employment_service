@@ -11,13 +11,18 @@ export class MainPage {
         this.services = this.getInitialServices();
         this.filterText = "";
         this.nextId = 6;
-
     }
 
     getInitialServices() {
         return [
             { id: 1, src: "https://cdn.gpb.ru/upload/files/iblock/f1c/h5pi4duvqhflhahp95loe4vrdshkptu7/x1_titul_2432x800.jpg", title: "Регистрация в качестве самозанятого", text: "Подача заявки в ФНС, присвоение статуса «плательщик НПД»" },
-            { id: 2, src: "https://cdn.gpb.ru/upload/files/iblock/18e/674mzgnqv20xyt6ryxad0t2trazpd3wz/x1_inside_2432x800.jpg", title: "Изменение вида деятельности", text: "Добавление, удаление или замена кодов ОКВЭД/ОКПДТ" },
+            {
+                id: 2,
+                src: "https://cdn.gpb.ru/upload/files/iblock/18e/674mzgnqv20xyt6ryxad0t2trazpd3wz/x1_inside_2432x800.jpg",
+                title: "Изменение вида деятельности",
+                text: "Добавление, удаление или замена кодов ОКВЭД/ОКПДТ",
+                badge: "Популярно"   // ← новое поле для демонстрации merge
+            },
             { id: 3, src: "https://cdn.gpb.ru/upload/files/iblock/bf2/x53am725mw4hcw3fbvjeqw1h3ypzmmnw/titul_1200x630-_-2024_12_02T124856.085.png", title: "Снятие с учёта самозанятого", text: "Прекращение деятельности в режиме НПД" },
             { id: 4, src: "https://cdn.gpb.ru/upload/files/iblock/b78/9fdyo75ph27322mcx3kla766p54vsgj2/x1_IP.png", title: "Выдача справки о постановке на учёт", text: "Официальный документ из ФНС для банков и заказчиков" },
             { id: 5, src: "https://cdn.gpb.ru/upload/files/iblock/107/skbum8ndum12z2s9s6c9qsyngd6jc5do/x1_titul_2432x800.jpg", title: "Помощь в уплате налога", text: "Проверка начислений, формирование квитанции, контроль оплаты" }
@@ -32,20 +37,20 @@ export class MainPage {
 
     addCopyOfFirst() {
         if (this.services.length === 0) return;
-        const first = this.services[0];
+        const first = this.services[0];               // первая услуга
         const newId = this.nextId++;
-        // Объединяем сначала объект с новым id, потом first – при конфликте id берётся из первого объекта (нового)
-        const copy = merge({ id: newId }, first);
+        // Берём поле badge из второй услуги (если оно есть)
+        const secondService = this.services[1];
+        const extraBadge = secondService && secondService.badge ? { badge: secondService.badge } : {};
+        // Объединяем: новый id, первая услуга, дополнительный бейдж
+        const copy = merge({ id: newId }, first, extraBadge);
         this.services.push(copy);
         this.render();
     }
 
     deleteService(id) {
-        // Получаем массив id всех услуг
         const allIds = this.services.map(s => s.id);
-        // Удаляем нужный id с помощью removeValues
         const remainingIds = removeValues(allIds, id);
-        // Оставляем только те услуги, id которых остались
         this.services = this.services.filter(s => remainingIds.includes(s.id));
         this.render();
     }
@@ -78,12 +83,10 @@ export class MainPage {
     render() {
         this.parent.innerHTML = '';
 
-        // Создаём контейнер для элементов управления
         const controlsDiv = document.createElement('div');
         controlsDiv.style.marginBottom = '24px';
         controlsDiv.className = 'main-controls';
 
-        // Поле ввода поиска
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
         searchInput.id = 'search-input';
@@ -93,13 +96,10 @@ export class MainPage {
         searchInput.style.flex = '1';
         searchInput.value = this.filterText;
 
-        // Контейнер для кнопок (flex)
         const buttonsRow = document.createElement('div');
         buttonsRow.style.display = 'flex';
         buttonsRow.style.gap = '8px';
         buttonsRow.style.marginBottom = '16px';
-
-        // Добавляем поле ввода и кнопки в строку
         buttonsRow.appendChild(searchInput);
 
         const searchButton = new SearchButtonComponent(buttonsRow, this.onSearchClick.bind(this));
@@ -113,7 +113,6 @@ export class MainPage {
 
         controlsDiv.appendChild(buttonsRow);
 
-        // Контейнер для сетки карточек
         const gridDiv = document.createElement('div');
         gridDiv.id = 'main-page';
         gridDiv.className = 'services-grid';
@@ -121,7 +120,6 @@ export class MainPage {
         this.parent.appendChild(controlsDiv);
         this.parent.appendChild(gridDiv);
 
-        // Рендерим карточки
         this.getFilteredServices().forEach(service => {
             const card = new ProductCardComponent(gridDiv);
             card.render(

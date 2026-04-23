@@ -21,7 +21,7 @@ export class MainPage {
                 src: "https://cdn.gpb.ru/upload/files/iblock/18e/674mzgnqv20xyt6ryxad0t2trazpd3wz/x1_inside_2432x800.jpg",
                 title: "Изменение вида деятельности",
                 text: "Добавление, удаление или замена кодов ОКВЭД/ОКПДТ",
-                badge: "Популярно"   // ← новое поле для демонстрации merge
+                badge: "Популярно"
             },
             { id: 3, src: "https://cdn.gpb.ru/upload/files/iblock/bf2/x53am725mw4hcw3fbvjeqw1h3ypzmmnw/titul_1200x630-_-2024_12_02T124856.085.png", title: "Снятие с учёта самозанятого", text: "Прекращение деятельности в режиме НПД" },
             { id: 4, src: "https://cdn.gpb.ru/upload/files/iblock/b78/9fdyo75ph27322mcx3kla766p54vsgj2/x1_IP.png", title: "Выдача справки о постановке на учёт", text: "Официальный документ из ФНС для банков и заказчиков" },

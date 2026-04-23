@@ -1,42 +1,40 @@
 // src/index.js
 const express = require('express');
 const path = require('path');
-const stocksRouter = require('./routes/stocks');
-const stocksService = require('./services/stocksService');
+const servicesRouter = require('./routes/selfEmploymentRoutes');
+const servicesService = require('./services/selfEmploymentService');
 
 const app = express();
 const PORT = 3000;
 
-// Абсолютный путь к файлу данных
-const DATA_FILE_PATH = path.join(__dirname, 'data', 'stocks.json');
+// Путь к новому файлу данных
+const DATA_FILE_PATH = path.join(__dirname, 'data', 'selfEmployment.json');
 
-// Инициализируем сервис (передаём путь к файлу)
-stocksService.init(DATA_FILE_PATH);
+// Инициализация сервиса
+servicesService.init(DATA_FILE_PATH);
 
-// 1. Встроенный middleware для парсинга JSON в теле запроса
 app.use(express.json());
 
-// 2. Собственный middleware для логирования каждого запроса
+// Логгер
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-    next(); // без вызова next() запрос "зависнет"
+    next();
 });
 
-// 3. Подключаем маршруты к пути /stocks
-app.use('/stocks', stocksRouter);
+// Подключаем маршруты по новому пути
+app.use('/self-employment-services', servicesRouter);
 
-// 4. Обработка 404 (маршрут не найден)
+// 404
 app.use((req, res) => {
     res.status(404).json({ error: 'Маршрут не найден' });
 });
 
-// 5. Глобальный обработчик ошибок (должен быть после всех middleware и маршрутов)
+// Глобальный error handler
 app.use((err, req, res, next) => {
-    console.error('Ошибка сервера:', err);
+    console.error(err);
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
 });
 
-// 6. Запуск сервера
 app.listen(PORT, () => {
-    console.log(`Сервер запущен по адресу http://localhost:${PORT}`);
+    console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

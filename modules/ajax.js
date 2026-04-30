@@ -4,7 +4,10 @@ class Ajax {
         xhr.open('GET', url);
         xhr.send();
         xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) this._handleResponse(xhr, callback);
+            if (xhr.readyState === 4) {
+                const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+                callback(data);
+            }
         };
     }
 
@@ -14,7 +17,9 @@ class Ajax {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(data));
         xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) this._handleResponse(xhr, callback);
+            if (xhr.readyState === 4) {
+                callback();
+            }
         };
     }
 
@@ -23,17 +28,11 @@ class Ajax {
         xhr.open('DELETE', url);
         xhr.send();
         xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) this._handleResponse(xhr, callback);
+            if (xhr.readyState === 4) {
+                callback();
+            }
         };
     }
-
-    _handleResponse(xhr, callback) {
-        try {
-            const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-            callback(data, xhr.status);
-        } catch (e) {
-            callback(null, xhr.status);
-        }
-    }
 }
+
 export const ajax = new Ajax();

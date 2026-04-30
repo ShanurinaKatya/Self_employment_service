@@ -1,7 +1,7 @@
 import { MainPage } from "./pages/main/Services_for_the_self-aware.js";
 import { HomeButtonComponent } from "./components/back-button/Services_for_the_self-aware.js";
 
-// 1. Функция для добавления глобальных стилей (БЕЗ УДАЛЕНИЙ)
+// 1. Функция для добавления глобальных стилей (с вашими правками)
 function injectGlobalStyles() {
     const style = document.createElement('style');
     style.textContent = `
@@ -56,7 +56,7 @@ function injectGlobalStyles() {
             margin: 0 auto;
         }
 
-        /* Сетка карточек */
+        /* Сетка карточек (фиксированная ширина 300px, левый край) */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, 300px);
@@ -98,7 +98,7 @@ function injectGlobalStyles() {
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* Синие кнопки */
+        /* Синие кнопки (в стиле калькулятора) */
         .btn-primary {
             background-color: #3F68EA;
             color: white;
@@ -110,6 +110,7 @@ function injectGlobalStyles() {
         .btn-primary:hover {
             background-color: #1752d4;
         }
+        /* кнопка "Добавить" */
         .btn-success {
             background-color: #3F68EA;
             border: none;
@@ -120,6 +121,7 @@ function injectGlobalStyles() {
         .btn-success:hover {
             background-color: #1752d4;
         }
+        /* Кнопка удаления */
         .btn-outline-danger {
             color: #dc3545;
             border: 1px solid #dc3545;
@@ -131,7 +133,7 @@ function injectGlobalStyles() {
             color: white;
         }
 
-        /* Стили для страницы продукта */
+        /* Стили для страницы продукта (широкая карточка) */
         #product-page .card {
             width: 90%;
             max-width: 1280px;
@@ -171,10 +173,11 @@ function createHeader() {
     title.textContent = 'Сервис для самозанятых';
     header.appendChild(title);
 
+    // Кнопка "Домой" через отдельный компонент
     const homeButton = new HomeButtonComponent(header, () => {
         const root = document.getElementById('root');
         const mainPage = new MainPage(root);
-        mainPage.getData(); // ВАЖНО: используем getData для возврата на главную
+        mainPage.render();
     });
     homeButton.render();
 
@@ -188,11 +191,7 @@ function init() {
 
     const root = document.getElementById('root');
     const mainPage = new MainPage(root);
-
-    // КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ:
-    // Мы вызываем getData(), который сходит на сервер http://localhost:3000/self-employment-services,
-    // получит карточки и сам вызовет метод render().
-    mainPage.getData();
+    mainPage.render();
 }
 
 // Запуск после загрузки DOM

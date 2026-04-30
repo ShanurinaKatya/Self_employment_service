@@ -4,7 +4,6 @@ class SelfAwareUrls {
     }
 
     getServices() {
-        // Должно быть точно так же, как в браузере
         return `${this.baseUrl}/self-employment-services`;
     }
 

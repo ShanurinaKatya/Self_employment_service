@@ -56,10 +56,10 @@ function injectGlobalStyles() {
             margin: 0 auto;
         }
 
-        /* Сетка карточек (фиксированная ширина 300px, левый край) */
+        /* Сетка карточек (фиксированная ширина 400px, левый край) */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, 300px);
+            grid-template-columns: repeat(auto-fill, 400px);
             gap: 24px;
             justify-content: start;
             align-items: stretch;

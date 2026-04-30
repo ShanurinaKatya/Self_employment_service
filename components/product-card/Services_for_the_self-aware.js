@@ -14,7 +14,7 @@ export class ProductCardComponent {
                     <p class="card-text flex-grow-1">${data.text}</p>
                     <div class="d-flex justify-content-between gap-2 mt-3">
                         <button class="btn btn-primary flex-grow-1" id="detail-card-${data.id}" data-id="${data.id}">Подробнее</button>
-                        <button class="btn btn-warning flex-grow-1" id="edit-card-${data.id}" data-id="${data.id}">Редактировать</button>
+                        <button class="btn btn-primary flex-grow-1" id="edit-card-${data.id}" data-id="${data.id}">Редактировать</button>
                         <button class="btn btn-outline-danger flex-grow-1" id="delete-card-${data.id}" data-id="${data.id}">Удалить</button>
                     </div>
                 </div>

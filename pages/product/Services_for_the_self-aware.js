@@ -1,5 +1,4 @@
 import { ProductComponent } from "../../components/product/Services_for_the_self-aware.js";
-import { BackButtonComponent } from "../../components/back-button/BackButtonComponent.js";
 import { ajax } from "../../modules/ajax.js";
 import { selfAwareUrls } from "../../modules/selfAwareUrls.js";
 import { MainPage } from "../main/Services_for_the_self-aware.js";
@@ -37,8 +36,6 @@ export class ProductPage {
         this.parent.innerHTML = '';
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-        const backButton = new BackButtonComponent(this.pageRoot);
-        backButton.render(this.onBack.bind(this));
 
         this.productComp = new ProductComponent(this.pageRoot);
         this.productComp.render(data);

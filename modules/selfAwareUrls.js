@@ -22,6 +22,10 @@ class SelfAwareUrls {
     removeServiceById(id) {
         return `${this.baseUrl}/self-employment-services/${id}`;
     }
+
+    searchServices(query) {
+        return `${this.baseUrl}/self-employment-services?q=${encodeURIComponent(query)}`;
+    }
 }
 
 export const selfAwareUrls = new SelfAwareUrls();

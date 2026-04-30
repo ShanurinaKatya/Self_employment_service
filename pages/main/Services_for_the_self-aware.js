@@ -1,13 +1,11 @@
 import { ProductCardComponent } from "../../components/product-card/Services_for_the_self-aware.js";
 import { ProductPage } from "../product/Services_for_the_self-aware.js";
 import { EditPage } from "../edit/Services_for_the_self-aware.js";
-import { AddButtonComponent } from "../../components/add-button/Services_for_the_self-aware.js";
 import { AddNewButtonComponent } from "../../components/add-button/AddNewButtonComponent.js";
 import { SearchButtonComponent } from "../../components/search-button/Services_for_the_self-aware.js";
 import { ResetButtonComponent } from "../../components/reset-button/Services_for_the_self-aware.js";
 import { ajax } from "../../modules/ajax.js";
 import { selfAwareUrls } from "../../modules/selfAwareUrls.js";
-import { merge } from "../../utils/Services_for_the_self-aware.js";
 
 export class MainPage {
     constructor(parent) {
@@ -83,33 +81,6 @@ export class MainPage {
         );
     }
 
-    addCopyOfFirst() {
-        if (this.services.length === 0) return;
-        const first = this.services[0];
-        const secondService = this.services[1];
-        const extraBadge = secondService && secondService.badge ? { badge: secondService.badge } : {};
-        const copy = merge({ id: Date.now() }, first, extraBadge);
-
-        const data = {
-            title: copy.title,
-            text: copy.text,
-            src: copy.src,
-            badge: copy.badge || null,
-            result: copy.result || "",
-            term: copy.term || "",
-            price: copy.price || "",
-            documents: copy.documents || ""
-        };
-
-        ajax.post(selfAwareUrls.createService(), data, (response, status) => {
-            if (status === 201 || status === 200) {
-                this.showNotification(`Добавлена услуга: ${response.title}`);
-                this.getData();
-            } else {
-                this.showNotification('Ошибка при добавлении услуги', true);
-            }
-        });
-    }
 
     onDetailClick(cardId) {
         new ProductPage(this.parent, cardId).render();
@@ -128,21 +99,34 @@ export class MainPage {
         new EditPage(this.parent, null).render();
     }
 
-    onAddCopyClick() {
-        this.addCopyOfFirst();
-    }
 
     onSearchClick() {
         const searchInput = document.getElementById('search-input');
-        this.filterText = searchInput.value;
-        this.renderCards();
+        const query = searchInput.value.trim();
+        
+        if (!query) {
+            this.getData();
+            return;
+        }
+        
+        ajax.get(selfAwareUrls.searchServices(query), (data, status) => {
+            if (status === 200 && Array.isArray(data)) {
+                this.services = data;
+                this.filterText = query;
+                this.renderCards();
+            } else {
+                this.showNotification('Ошибка поиска', true);
+                this.getData();
+            }
+        });
     }
+
 
     onResetSearchClick() {
         const searchInput = document.getElementById('search-input');
         searchInput.value = '';
         this.filterText = '';
-        this.renderCards();
+        this.getData();
     }
 
     renderCards() {
@@ -203,8 +187,6 @@ export class MainPage {
         const resetButton = new ResetButtonComponent(buttonsDiv, this.onResetSearchClick.bind(this));
         resetButton.render();
 
-        const addCopyButton = new AddButtonComponent(buttonsDiv, this.onAddCopyClick.bind(this));
-        addCopyButton.render();
 
         const addNewButton = new AddNewButtonComponent(buttonsDiv, this.onAddClick.bind(this));
         addNewButton.render();

@@ -1,4 +1,3 @@
-import { BackButtonComponent } from "../../components/back-button/BackButtonComponent.js";
 import { ajax } from "../../modules/ajax.js";
 import { selfAwareUrls } from "../../modules/selfAwareUrls.js";
 import { MainPage } from "../main/Services_for_the_self-aware.js";
@@ -130,8 +129,6 @@ export class EditPage {
         this.parent.innerHTML = '';
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-        const backButton = new BackButtonComponent(this.pageRoot);
-        backButton.render(this.onBack.bind(this));
 
         const card = document.createElement('div');
         card.className = 'card';
@@ -178,9 +175,6 @@ export class EditPage {
                         <input type="text" class="form-control" id="edit-documents">
                     </div>
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary flex-grow-1">
-                            ${this.isEdit ? 'Сохранить изменения' : 'Создать услугу'}
-                        </button>
                         <button type="button" id="cancel-button" class="btn btn-secondary">Отмена</button>
                     </div>
                 </form>

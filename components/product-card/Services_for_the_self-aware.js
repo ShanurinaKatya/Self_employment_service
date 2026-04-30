@@ -4,7 +4,6 @@ export class ProductCardComponent {
     }
 
     getHTML(data) {
-        // Генерируем HTML для бейджа, только если поле badge присутствует и не пустое
         const badgeHtml = data.badge ? `<div class="card-badge">${data.badge}</div>` : '';
         return `
             <div class="card d-flex flex-column" style="width: 100%; height: 100%; margin: 0; position: relative;">
@@ -15,6 +14,7 @@ export class ProductCardComponent {
                     <p class="card-text flex-grow-1">${data.text}</p>
                     <div class="d-flex justify-content-between gap-2 mt-3">
                         <button class="btn btn-primary flex-grow-1" id="detail-card-${data.id}" data-id="${data.id}">Подробнее</button>
+                        <button class="btn btn-warning flex-grow-1" id="edit-card-${data.id}" data-id="${data.id}">Редактировать</button>
                         <button class="btn btn-outline-danger flex-grow-1" id="delete-card-${data.id}" data-id="${data.id}">Удалить</button>
                     </div>
                 </div>
@@ -22,18 +22,21 @@ export class ProductCardComponent {
         `;
     }
 
-    addListeners(data, onDetail, onDelete) {
+    addListeners(data, onDetail, onEdit, onDelete) {
         document
             .getElementById(`detail-card-${data.id}`)
             .addEventListener("click", onDetail);
+        document
+            .getElementById(`edit-card-${data.id}`)
+            .addEventListener("click", () => onEdit(data.id));
         document
             .getElementById(`delete-card-${data.id}`)
             .addEventListener("click", () => onDelete(data.id));
     }
 
-    render(data, onDetail, onDelete) {
+    render(data, onDetail, onEdit, onDelete) {
         const html = this.getHTML(data);
         this.parent.insertAdjacentHTML('beforeend', html);
-        this.addListeners(data, onDetail, onDelete);
+        this.addListeners(data, onDetail, onEdit, onDelete);
     }
 }

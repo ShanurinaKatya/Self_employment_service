@@ -132,6 +132,16 @@ function injectGlobalStyles() {
             background-color: #dc3545;
             color: white;
         }
+        /* Кнопка редактирования */
+        .btn-warning {
+            background-color: #ffc107;
+            border: none;
+            color: black;
+            border-radius: 40px;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
 
         /* Стили для страницы продукта (широкая карточка) */
         #product-page .card {

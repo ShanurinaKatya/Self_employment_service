@@ -6,7 +6,7 @@ class Ajax {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-                callback(data);
+                callback(data, xhr.status);
             }
         };
     }
@@ -18,7 +18,21 @@ class Ajax {
         xhr.send(JSON.stringify(data));
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                callback();
+                const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+                callback(data, xhr.status);
+            }
+        };
+    }
+
+    patch(url, data, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PATCH', url);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+                callback(data, xhr.status);
             }
         };
     }
@@ -29,7 +43,7 @@ class Ajax {
         xhr.send();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                callback();
+                callback(null, xhr.status);
             }
         };
     }

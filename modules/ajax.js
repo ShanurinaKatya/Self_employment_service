@@ -5,8 +5,7 @@ class Ajax {
         xhr.send();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-                callback(data, xhr.status);
+                this._handleResponse(xhr, callback);
             }
         };
     }
@@ -18,8 +17,7 @@ class Ajax {
         xhr.send(JSON.stringify(data));
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-                callback(data, xhr.status);
+                this._handleResponse(xhr, callback);
             }
         };
     }
@@ -31,8 +29,7 @@ class Ajax {
         xhr.send(JSON.stringify(data));
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-                callback(data, xhr.status);
+                this._handleResponse(xhr, callback);
             }
         };
     }
@@ -43,9 +40,19 @@ class Ajax {
         xhr.send();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                callback(null, xhr.status);
+                this._handleResponse(xhr, callback);
             }
         };
+    }
+
+    _handleResponse(xhr, callback) {
+        try {
+            const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+            callback(data, xhr.status);
+        } catch (e) {
+            console.error('Ошибка парсинга JSON:', e);
+            callback(null, xhr.status);
+        }
     }
 }
 

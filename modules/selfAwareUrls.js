@@ -15,6 +15,10 @@ class SelfAwareUrls {
         return `${this.baseUrl}/self-employment-services`;
     }
 
+    updateService(id) {
+        return `${this.baseUrl}/self-employment-services/${id}`;
+    }
+
     removeServiceById(id) {
         return `${this.baseUrl}/self-employment-services/${id}`;
     }

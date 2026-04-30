@@ -4,57 +4,121 @@ import { selfAwareUrls } from "../../modules/selfAwareUrls.js";
 import { MainPage } from "../main/Services_for_the_self-aware.js";
 
 export class EditPage {
-    constructor(parent, service) {
+    constructor(parent, id = null) {
         this.parent = parent;
-        this.service = service;
-        this.isEdit = !!service;
+        this.id = id;
+        this.serviceData = null;
     }
 
     get pageRoot() {
         return document.getElementById('edit-page');
     }
 
+    get isEdit() {
+        return !!this.id;
+    }
+
     getHTML() {
         return `<div id="edit-page"></div>`;
     }
 
-    onSave() {
-        const title = document.getElementById('edit-title').value;
-        const text = document.getElementById('edit-text').value;
-        const src = document.getElementById('edit-src').value;
-        const badge = document.getElementById('edit-badge').value;
-        const result = document.getElementById('edit-result').value;
-        const term = document.getElementById('edit-term').value;
-        const price = document.getElementById('edit-price').value;
-        const documents = document.getElementById('edit-documents').value;
+    showNotification(message, isError = false) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-left: 4px solid ${isError ? '#dc3545' : '#3F68EA'};
+        `;
+        notification.innerHTML = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
 
-        const data = {
-            title,
-            text,
-            src,
-            badge: badge || null,
-            result,
-            term,
-            price,
-            documents
+    loadServiceData() {
+        if (!this.id) return;
+
+        ajax.get(selfAwareUrls.getServiceById(this.id), (data, status) => {
+            if (status === 200 && data) {
+                this.serviceData = data;
+                this.fillForm(data);
+            } else {
+                this.showNotification('Ошибка загрузки данных услуги', true);
+            }
+        });
+    }
+
+    fillForm(data) {
+        document.getElementById('edit-title').value = data.title || '';
+        document.getElementById('edit-text').value = data.text || '';
+        document.getElementById('edit-src').value = data.src || '';
+        document.getElementById('edit-badge').value = data.badge || '';
+        document.getElementById('edit-result').value = data.result || '';
+        document.getElementById('edit-term').value = data.term || '';
+        document.getElementById('edit-price').value = data.price || '';
+        document.getElementById('edit-documents').value = data.documents || '';
+    }
+
+    getFormData() {
+        return {
+            title: document.getElementById('edit-title').value,
+            text: document.getElementById('edit-text').value,
+            src: document.getElementById('edit-src').value,
+            badge: document.getElementById('edit-badge').value || null,
+            result: document.getElementById('edit-result').value,
+            term: document.getElementById('edit-term').value,
+            price: document.getElementById('edit-price').value,
+            documents: document.getElementById('edit-documents').value
         };
+    }
 
-        if (this.isEdit) {
-            ajax.patch(selfAwareUrls.getServiceById(this.service.id), data, (response, status) => {
-                if (status === 200) {
+    validateForm(data) {
+        if (!data.title) {
+            this.showNotification('Введите название услуги', true);
+            return false;
+        }
+        return true;
+    }
+
+    createService(formData) {
+        ajax.post(selfAwareUrls.createService(), formData, (data, status) => {
+            if (status === 201 || status === 200) {
+                this.showNotification('Услуга успешно создана!');
+                setTimeout(() => {
                     new MainPage(this.parent).render();
-                } else {
-                    console.error('Failed to update:', status);
-                }
-            });
-        } else {
-            ajax.post(selfAwareUrls.createService(), data, (response, status) => {
-                if (status === 201 || status === 200) {
+                }, 1500);
+            } else {
+                this.showNotification('Ошибка при создании услуги', true);
+            }
+        });
+    }
+
+    updateService(formData) {
+        ajax.patch(selfAwareUrls.updateService(this.id), formData, (data, status) => {
+            if (status === 200) {
+                this.showNotification('Услуга успешно обновлена!');
+                setTimeout(() => {
                     new MainPage(this.parent).render();
-                } else {
-                    console.error('Failed to create:', status);
-                }
-            });
+                }, 1500);
+            } else {
+                this.showNotification('Ошибка при обновлении услуги', true);
+            }
+        });
+    }
+
+    onSave() {
+        const formData = this.getFormData();
+        if (this.validateForm(formData)) {
+            if (this.id) {
+                this.updateService(formData);
+            } else {
+                this.createService(formData);
+            }
         }
     }
 
@@ -82,38 +146,43 @@ export class EditPage {
                 <h5 class="card-title">${title}</h5>
                 <form id="edit-form">
                     <div class="mb-3">
-                        <label class="form-label">Название</label>
-                        <input type="text" class="form-control" id="edit-title" value="${this.service ? this.service.title || '' : ''}" required>
+                        <label class="form-label">Название *</label>
+                        <input type="text" class="form-control" id="edit-title" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Описание</label>
-                        <textarea class="form-control" id="edit-text" rows="2">${this.service ? this.service.text || '' : ''}</textarea>
+                        <textarea class="form-control" id="edit-text" rows="2"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">URL изображения</label>
-                        <input type="text" class="form-control" id="edit-src" value="${this.service ? this.service.src || '' : ''}">
+                        <input type="text" class="form-control" id="edit-src">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Бейдж (необязательно)</label>
-                        <input type="text" class="form-control" id="edit-badge" value="${this.service ? this.service.badge || '' : ''}">
+                        <label class="form-label">Бейдж</label>
+                        <input type="text" class="form-control" id="edit-badge">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Результат</label>
-                        <input type="text" class="form-control" id="edit-result" value="${this.service ? this.service.result || '' : ''}">
+                        <input type="text" class="form-control" id="edit-result">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Срок</label>
-                        <input type="text" class="form-control" id="edit-term" value="${this.service ? this.service.term || '' : ''}">
+                        <input type="text" class="form-control" id="edit-term">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Цена</label>
-                        <input type="text" class="form-control" id="edit-price" value="${this.service ? this.service.price || '' : ''}">
+                        <input type="text" class="form-control" id="edit-price">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Документы</label>
-                        <input type="text" class="form-control" id="edit-documents" value="${this.service ? this.service.documents || '' : ''}">
+                        <input type="text" class="form-control" id="edit-documents">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1">
+                            ${this.isEdit ? 'Сохранить изменения' : 'Создать услугу'}
+                        </button>
+                        <button type="button" id="cancel-button" class="btn btn-secondary">Отмена</button>
+                    </div>
                 </form>
             </div>
         `;
@@ -124,5 +193,13 @@ export class EditPage {
             e.preventDefault();
             this.onSave();
         });
+
+        document.getElementById('cancel-button').addEventListener('click', () => {
+            this.onBack();
+        });
+
+        if (this.id) {
+            this.loadServiceData();
+        }
     }
 }

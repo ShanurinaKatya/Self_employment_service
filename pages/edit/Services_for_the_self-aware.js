@@ -7,6 +7,7 @@ export class EditPage {
         this.parent = parent;
         this.id = id;
         this.serviceData = null;
+        this.firstServiceData = null;
     }
 
     get pageRoot() {
@@ -37,6 +38,37 @@ export class EditPage {
         notification.innerHTML = message;
         document.body.appendChild(notification);
         setTimeout(() => notification.remove(), 3000);
+    }
+
+    loadFirstServiceData() {
+        ajax.get(selfAwareUrls.getServices(), (data, status) => {
+            if (status === 200 && data && Array.isArray(data) && data.length > 0) {
+                this.firstServiceData = data[0];
+                this.fillFormWithMerge(data[0]);
+            }
+        });
+    }
+
+    fillFormWithMerge(firstData) {
+        setTimeout(() => {
+            const titleInput = document.getElementById('edit-title');
+            const textInput = document.getElementById('edit-text');
+            const srcInput = document.getElementById('edit-src');
+            const badgeInput = document.getElementById('edit-badge');
+            const resultInput = document.getElementById('edit-result');
+            const termInput = document.getElementById('edit-term');
+            const priceInput = document.getElementById('edit-price');
+            const docsInput = document.getElementById('edit-documents');
+            
+            if (titleInput) titleInput.value = firstData.title || '';
+            if (textInput) textInput.value = firstData.text || '';
+            if (srcInput) srcInput.value = firstData.src || '';
+            if (badgeInput) badgeInput.value = firstData.badge || '';
+            if (resultInput) resultInput.value = firstData.result || '';
+            if (termInput) termInput.value = firstData.term || '';
+            if (priceInput) priceInput.value = firstData.price || '';
+            if (docsInput) docsInput.value = firstData.documents || '';
+        }, 100);
     }
 
     loadServiceData() {
@@ -194,6 +226,8 @@ export class EditPage {
 
         if (this.id) {
             this.loadServiceData();
+        } else {
+            this.loadFirstServiceData();
         }
     }
 }

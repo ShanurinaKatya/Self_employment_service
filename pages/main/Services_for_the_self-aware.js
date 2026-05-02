@@ -1,7 +1,7 @@
 import { ProductCardComponent } from "../../components/product-card/Services_for_the_self-aware.js";
 import { ProductPage } from "../product/Services_for_the_self-aware.js";
 import { EditPage } from "../edit/Services_for_the_self-aware.js";
-import { AddNewButtonComponent } from "../../components/add-button/AddNewButtonComponent.js";
+import { AddButtonComponent } from "../../components/add-button/Services_for_the_self-aware.js";
 import { SearchButtonComponent } from "../../components/search-button/Services_for_the_self-aware.js";
 import { ResetButtonComponent } from "../../components/reset-button/Services_for_the_self-aware.js";
 import { ajax } from "../../modules/ajax.js";
@@ -188,7 +188,7 @@ export class MainPage {
         resetButton.render();
 
 
-        const addNewButton = new AddNewButtonComponent(buttonsDiv, this.onAddClick.bind(this));
+        const addNewButton = new AddButtonComponent(buttonsDiv, this.onAddClick.bind(this));
         addNewButton.render();
 
         const controlsDiv = document.createElement('div');

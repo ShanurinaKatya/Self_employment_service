@@ -40,13 +40,16 @@ export class EditPage {
         setTimeout(() => notification.remove(), 3000);
     }
 
-    loadFirstServiceData() {
-        ajax.get(selfAwareUrls.getServices(), (data, status) => {
-            if (status === 200 && data && Array.isArray(data) && data.length > 0) {
+    async loadFirstServiceData() {
+        try {
+            const data = await ajax.get(selfAwareUrls.getServices());
+            if (data && Array.isArray(data) && data.length > 0) {
                 this.firstServiceData = data[0];
                 this.fillFormWithMerge(data[0]);
             }
-        });
+        } catch (error) {
+            console.error('Error loading first service:', error);
+        }
     }
 
     fillFormWithMerge(firstData) {
@@ -71,17 +74,16 @@ export class EditPage {
         }, 100);
     }
 
-    loadServiceData() {
+    async loadServiceData() {
         if (!this.id) return;
 
-        ajax.get(selfAwareUrls.getServiceById(this.id), (data, status) => {
-            if (status === 200 && data) {
-                this.serviceData = data;
-                this.fillForm(data);
-            } else {
-                this.showNotification('Ошибка загрузки данных услуги', true);
-            }
-        });
+        try {
+            const data = await ajax.get(selfAwareUrls.getServiceById(this.id));
+            this.serviceData = data;
+            this.fillForm(data);
+        } catch (error) {
+            this.showNotification('Ошибка загрузки данных услуги', true);
+        }
     }
 
     fillForm(data) {
@@ -116,30 +118,28 @@ export class EditPage {
         return true;
     }
 
-    createService(formData) {
-        ajax.post(selfAwareUrls.createService(), formData, (data, status) => {
-            if (status === 201 || status === 200) {
-                this.showNotification('Услуга успешно создана!');
-                setTimeout(() => {
-                    new MainPage(this.parent).render();
-                }, 1500);
-            } else {
-                this.showNotification('Ошибка при создании услуги', true);
-            }
-        });
+    async createService(formData) {
+        try {
+            await ajax.post(selfAwareUrls.createService(), formData);
+            this.showNotification('Услуга успешно создана!');
+            setTimeout(() => {
+                new MainPage(this.parent).render();
+            }, 1500);
+        } catch (error) {
+            this.showNotification('Ошибка при создании услуги', true);
+        }
     }
 
-    updateService(formData) {
-        ajax.patch(selfAwareUrls.updateService(this.id), formData, (data, status) => {
-            if (status === 200) {
-                this.showNotification('Услуга успешно обновлена!');
-                setTimeout(() => {
-                    new MainPage(this.parent).render();
-                }, 1500);
-            } else {
-                this.showNotification('Ошибка при обновлении услуги', true);
-            }
-        });
+    async updateService(formData) {
+        try {
+            await ajax.patch(selfAwareUrls.updateService(this.id), formData);
+            this.showNotification('Услуга успешно обновлена!');
+            setTimeout(() => {
+                new MainPage(this.parent).render();
+            }, 1500);
+        } catch (error) {
+            this.showNotification('Ошибка при обновлении услуги', true);
+        }
     }
 
     onSave() {

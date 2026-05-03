@@ -45,9 +45,10 @@ export class MainPage {
         }, 4000);
     }
 
-    getData() {
-        ajax.get(selfAwareUrls.getServices(), (data, status) => {
-            if (status === 200 && data && Array.isArray(data)) {
+    async getData() {
+        try {
+            const data = await ajax.get(selfAwareUrls.getServices());
+            if (data && Array.isArray(data)) {
                 this.services = data;
                 this.renderCards();
             } else {
@@ -58,18 +59,24 @@ export class MainPage {
                     </div>
                 `;
             }
-        });
+        } catch (error) {
+            this.showNotification('Ошибка загрузки услуг!', true);
+            this.servicesContainer.innerHTML = `
+                <div class="col-12 text-center">
+                    <div class="alert alert-danger">Ошибка загрузки данных с сервера</div>
+                </div>
+            `;
+        }
     }
 
-    deleteService(id) {
-        ajax.delete(selfAwareUrls.removeServiceById(id), (data, status) => {
-            if (status === 200 || status === 204) {
-                this.showNotification('Услуга удалена');
-                this.getData();
-            } else {
-                this.showNotification('Ошибка при удалении услуги', true);
-            }
-        });
+    async deleteService(id) {
+        try {
+            await ajax.delete(selfAwareUrls.removeServiceById(id));
+            this.showNotification('Услуга удалена');
+            this.getData();
+        } catch (error) {
+            this.showNotification('Ошибка при удалении услуги', true);
+        }
     }
 
     getFilteredServices() {
@@ -100,7 +107,7 @@ export class MainPage {
     }
 
 
-    onSearchClick() {
+    async onSearchClick() {
         const searchInput = document.getElementById('search-input');
         const query = searchInput.value.trim();
         
@@ -109,8 +116,9 @@ export class MainPage {
             return;
         }
         
-        ajax.get(selfAwareUrls.searchServices(query), (data, status) => {
-            if (status === 200 && Array.isArray(data)) {
+        try {
+            const data = await ajax.get(selfAwareUrls.searchServices(query));
+            if (Array.isArray(data)) {
                 this.services = data;
                 this.filterText = query;
                 this.renderCards();
@@ -118,7 +126,10 @@ export class MainPage {
                 this.showNotification('Ошибка поиска', true);
                 this.getData();
             }
-        });
+        } catch (error) {
+            this.showNotification('Ошибка поиска', true);
+            this.getData();
+        }
     }
 
 

@@ -9,23 +9,22 @@ export class ProductPage {
         this.id = parseInt(id);
     }
 
-    getData() {
-        ajax.get(selfAwareUrls.getServiceById(this.id), (data, status) => {
-            if (status === 200 && data) {
-                this.renderData(data);
-            } else {
-                console.error('Failed to load service:', status);
-                this.renderData({
-                    title: "Услуга не найдена",
-                    text: "Попробуйте вернуться на главную",
-                    src: "",
-                    result: "—",
-                    term: "—",
-                    price: "—",
-                    documents: "—"
-                });
-            }
-        });
+    async getData() {
+        try {
+            const data = await ajax.get(selfAwareUrls.getServiceById(this.id));
+            this.renderData(data);
+        } catch (error) {
+            console.error('Failed to load service:', error);
+            this.renderData({
+                title: "Услуга не найдена",
+                text: "Попробуйте вернуться на главную",
+                src: "",
+                result: "—",
+                term: "—",
+                price: "—",
+                documents: "—"
+            });
+        }
     }
 
     onBack() {

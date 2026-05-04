@@ -49,5 +49,11 @@
     "term": "сразу онлайн",
     "price": "бесплатно (оплачиваете только сам налог)",
     "documents": "ИНН"
+  },
+  {
+    "id": 6,
+    "src": "https://cdn.gpb.ru/upload/files/iblock/f1c/h5pi4duvqhflhahp95loe4vrdshkptu7/x1_titul_2432x800.jpg",
+    "title": "Регистрация в качестве самозанятого",
+    "text": "Подача заявки в ФНС, присвоение статуса «плательщик НПД»"
   }
 ]

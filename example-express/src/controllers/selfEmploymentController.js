@@ -17,11 +17,11 @@ const getServiceById = (req, res) => {
 };
 
 const createService = (req, res) => {
-    const { src, title, text } = req.body;
-    if (!src || !title || !text) {
-        return res.status(400).json({ error: 'Не все поля заполнены (src, title, text)' });
+    const { title, text, src, badge, result, term, price, documents } = req.body;
+    if (!title) {
+        return res.status(400).json({ error: 'Введите название услуги' });
     }
-    const newService = serviceLayer.create({ src, title, text });
+    const newService = serviceLayer.create({ title, text, src, badge, result, term, price, documents });
     res.status(201).json(newService);
 };
 
